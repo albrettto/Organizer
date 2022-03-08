@@ -42,8 +42,6 @@
             this.AddressLbl = new System.Windows.Forms.Label();
             this.PhoneNumberLbl = new System.Windows.Forms.Label();
             this.SearchLbl = new System.Windows.Forms.Label();
-            this.organizerPanel = new System.Windows.Forms.Panel();
-            this.DateLbl = new System.Windows.Forms.Label();
             this.PlanMeetingPanel = new System.Windows.Forms.Panel();
             this.ClearBtn = new System.Windows.Forms.Button();
             this.CreateBtn = new System.Windows.Forms.Button();
@@ -60,9 +58,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.MeetingLbl = new System.Windows.Forms.Label();
             this.DateMskdTxtBox = new System.Windows.Forms.MaskedTextBox();
+            this.organizerPanel = new System.Windows.Forms.Panel();
+            this.DateLbl = new System.Windows.Forms.Label();
             this.calendarPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
-            this.organizerPanel.SuspendLayout();
             this.PlanMeetingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -197,27 +196,6 @@
             this.SearchLbl.Size = new System.Drawing.Size(94, 31);
             this.SearchLbl.TabIndex = 0;
             this.SearchLbl.Text = "ПОИСК";
-            // 
-            // organizerPanel
-            // 
-            this.organizerPanel.AutoScroll = true;
-            this.organizerPanel.BackColor = System.Drawing.Color.OldLace;
-            this.organizerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.organizerPanel.Controls.Add(this.DateLbl);
-            this.organizerPanel.Location = new System.Drawing.Point(287, 12);
-            this.organizerPanel.Name = "organizerPanel";
-            this.organizerPanel.Size = new System.Drawing.Size(786, 662);
-            this.organizerPanel.TabIndex = 2;
-            // 
-            // DateLbl
-            // 
-            this.DateLbl.AutoSize = true;
-            this.DateLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.DateLbl.ForeColor = System.Drawing.Color.SaddleBrown;
-            this.DateLbl.Location = new System.Drawing.Point(9, 9);
-            this.DateLbl.Name = "DateLbl";
-            this.DateLbl.Size = new System.Drawing.Size(0, 31);
-            this.DateLbl.TabIndex = 0;
             // 
             // PlanMeetingPanel
             // 
@@ -397,6 +375,28 @@
             this.DateMskdTxtBox.TabIndex = 0;
             this.DateMskdTxtBox.ValidatingType = typeof(System.DateTime);
             // 
+            // organizerPanel
+            // 
+            this.organizerPanel.AutoScroll = true;
+            this.organizerPanel.BackColor = System.Drawing.Color.OldLace;
+            this.organizerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.organizerPanel.Location = new System.Drawing.Point(287, 12);
+            this.organizerPanel.Name = "organizerPanel";
+            this.organizerPanel.Size = new System.Drawing.Size(786, 662);
+            this.organizerPanel.TabIndex = 2;
+            this.organizerPanel.Controls.Add(this.DateLbl);
+            //
+            // DateLbl
+            //
+            this.DateLbl.AutoSize = true;
+            this.DateLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.DateLbl.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.DateLbl.Location = new System.Drawing.Point(9, 9);
+            this.DateLbl.Name = "DateLbl";
+            this.DateLbl.Size = new System.Drawing.Size(0, 31);
+            this.DateLbl.TabIndex = 0;
+            this.DateLbl.Text = calendar.SelectionStart.ToString("d MMMM yyyy");
+            // 
             // Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -414,8 +414,6 @@
             this.calendarPanel.ResumeLayout(false);
             this.searchPanel.ResumeLayout(false);
             this.searchPanel.PerformLayout();
-            this.organizerPanel.ResumeLayout(false);
-            this.organizerPanel.PerformLayout();
             this.PlanMeetingPanel.ResumeLayout(false);
             this.PlanMeetingPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -437,8 +435,6 @@
         private TextBox HouseTxtBox;
         private TextBox StreetTxtBox;
         private TextBox TownTxtBox;
-        public Panel organizerPanel;
-        public Label DateLbl;
         private Panel PlanMeetingPanel;
         private Button CreateBtn;
         private TextBox GoalTxtBox;
@@ -455,5 +451,7 @@
         private Label MeetingLbl;
         private MaskedTextBox DateMskdTxtBox;
         private Button ClearBtn;
+        public Panel organizerPanel;
+        private Label DateLbl;
     }
 }

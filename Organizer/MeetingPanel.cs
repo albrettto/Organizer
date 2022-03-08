@@ -74,6 +74,7 @@ namespace Organizer
             textBox.Dispose();
             delete_button.Dispose();
             panel.Dispose();
+
         }
 
     }
