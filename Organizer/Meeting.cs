@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 
 namespace Organizer
 {
+    [Serializable]
     public class Meeting
     {
-        private DateTime date;
-        private string phone_number;
-        private string name;
-        private string purpose_of_meeting;
-        private string town;
-        private string street;
-        private int house;
+        public DateTime date;
+        public string phone_number;
+        public string name;
+        public string purpose_of_meeting;
+        public string town;
+        public string street;
+        public string house;
         public Meeting()
         {
             date = DateTime.Now;
             phone_number = "";
             town = "";
-            street = " ";
-            house = 0;
+            street = "";
+            house = "";
             name = "";
             purpose_of_meeting = "";
         }
-        public Meeting(DateTime new_date, string new_phone_number,string new_town, string new_street, int new_house, string new_name, string new_purpose_of_meeting)
+        public Meeting(DateTime new_date, string new_phone_number,string new_town, string new_street, string new_house, string new_name, string new_purpose_of_meeting)
         {
             date = new_date;
             phone_number = new_phone_number;
@@ -83,11 +84,11 @@ namespace Organizer
         {
             street = new_street;
         }
-        public int getHouse()
+        public string getHouse()
         {
             return house;
         }
-        public void setHouse(int new_house)
+        public void setHouse(string new_house)
         {
             house = new_house;
         }

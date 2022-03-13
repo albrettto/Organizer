@@ -32,6 +32,7 @@
             this.calendarPanel = new System.Windows.Forms.Panel();
             this.calendar = new System.Windows.Forms.MonthCalendar();
             this.searchPanel = new System.Windows.Forms.Panel();
+            this.ClearSearchPanelBtn = new System.Windows.Forms.Button();
             this.SearchBtn = new System.Windows.Forms.Button();
             this.NameTxtBox = new System.Windows.Forms.TextBox();
             this.HouseTxtBox = new System.Windows.Forms.TextBox();
@@ -63,11 +64,12 @@
             this.calendarPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.PlanMeetingPanel.SuspendLayout();
+            this.organizerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // calendarPanel
             // 
-            this.calendarPanel.BackColor = System.Drawing.Color.OldLace;
+            this.calendarPanel.BackColor = background_color;
             this.calendarPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.calendarPanel.Controls.Add(this.calendar);
             this.calendarPanel.Location = new System.Drawing.Point(12, 12);
@@ -78,17 +80,18 @@
             // calendar
             // 
             this.calendar.BackColor = System.Drawing.SystemColors.Window;
-            this.calendar.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.calendar.ForeColor = font_color;
             this.calendar.Location = new System.Drawing.Point(39, 25);
             this.calendar.Name = "calendar";
             this.calendar.TabIndex = 0;
-            this.calendar.TitleForeColor = System.Drawing.Color.SaddleBrown;
+            this.calendar.TitleForeColor = font_color;
             this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
             // searchPanel
             // 
-            this.searchPanel.BackColor = System.Drawing.Color.OldLace;
+            this.searchPanel.BackColor = background_color;
             this.searchPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.searchPanel.Controls.Add(this.ClearSearchPanelBtn);
             this.searchPanel.Controls.Add(this.SearchBtn);
             this.searchPanel.Controls.Add(this.NameTxtBox);
             this.searchPanel.Controls.Add(this.HouseTxtBox);
@@ -103,21 +106,37 @@
             this.searchPanel.Name = "searchPanel";
             this.searchPanel.Size = new System.Drawing.Size(269, 401);
             this.searchPanel.TabIndex = 1;
+            this.searchPanel.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
+            // 
+            // ClearSearchPanelBtn
+            // 
+            this.ClearSearchPanelBtn.BackColor = clearbtn_color;
+            this.ClearSearchPanelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ClearSearchPanelBtn.ForeColor = background_color;
+            this.ClearSearchPanelBtn.Location = new System.Drawing.Point(148, 334);
+            this.ClearSearchPanelBtn.Name = "ClearSearchPanelBtn";
+            this.ClearSearchPanelBtn.Size = new System.Drawing.Size(94, 31);
+            this.ClearSearchPanelBtn.TabIndex = 7;
+            this.ClearSearchPanelBtn.Text = "Очистить";
+            this.ClearSearchPanelBtn.UseVisualStyleBackColor = false;
+            this.ClearSearchPanelBtn.Click += new System.EventHandler(this.ClearSearchPanelBtn_Click);
             // 
             // SearchBtn
             // 
-            this.SearchBtn.BackColor = System.Drawing.Color.SaddleBrown;
+            this.SearchBtn.BackColor = font_color;
             this.SearchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchBtn.ForeColor = System.Drawing.Color.OldLace;
-            this.SearchBtn.Location = new System.Drawing.Point(81, 328);
+            this.SearchBtn.ForeColor = background_color;
+            this.SearchBtn.Location = new System.Drawing.Point(25, 334);
             this.SearchBtn.Name = "SearchBtn";
             this.SearchBtn.Size = new System.Drawing.Size(94, 31);
             this.SearchBtn.TabIndex = 0;
             this.SearchBtn.Text = "Поиск";
             this.SearchBtn.UseVisualStyleBackColor = false;
+            this.SearchBtn.Click += new System.EventHandler(this.SearchBtn_Click);
             // 
             // NameTxtBox
             // 
+            this.NameTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.NameTxtBox.Location = new System.Drawing.Point(3, 277);
             this.NameTxtBox.Name = "NameTxtBox";
             this.NameTxtBox.PlaceholderText = "С кем запланированна встреча";
@@ -126,6 +145,7 @@
             // 
             // HouseTxtBox
             // 
+            this.HouseTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.HouseTxtBox.Location = new System.Drawing.Point(5, 208);
             this.HouseTxtBox.Name = "HouseTxtBox";
             this.HouseTxtBox.PlaceholderText = "№ дома";
@@ -134,6 +154,7 @@
             // 
             // StreetTxtBox
             // 
+            this.StreetTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.StreetTxtBox.Location = new System.Drawing.Point(5, 175);
             this.StreetTxtBox.Name = "StreetTxtBox";
             this.StreetTxtBox.PlaceholderText = "Улица";
@@ -142,6 +163,7 @@
             // 
             // TownTxtBox
             // 
+            this.TownTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.TownTxtBox.Location = new System.Drawing.Point(5, 142);
             this.TownTxtBox.Name = "TownTxtBox";
             this.TownTxtBox.PlaceholderText = "Город";
@@ -190,7 +212,7 @@
             // 
             this.SearchLbl.AutoSize = true;
             this.SearchLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.SearchLbl.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.SearchLbl.ForeColor = font_color;
             this.SearchLbl.Location = new System.Drawing.Point(81, 0);
             this.SearchLbl.Name = "SearchLbl";
             this.SearchLbl.Size = new System.Drawing.Size(94, 31);
@@ -199,7 +221,7 @@
             // 
             // PlanMeetingPanel
             // 
-            this.PlanMeetingPanel.BackColor = System.Drawing.Color.NavajoWhite;
+            this.PlanMeetingPanel.BackColor = planpanel_color;
             this.PlanMeetingPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PlanMeetingPanel.Controls.Add(this.ClearBtn);
             this.PlanMeetingPanel.Controls.Add(this.CreateBtn);
@@ -220,12 +242,13 @@
             this.PlanMeetingPanel.Name = "PlanMeetingPanel";
             this.PlanMeetingPanel.Size = new System.Drawing.Size(447, 662);
             this.PlanMeetingPanel.TabIndex = 3;
+            this.PlanMeetingPanel.Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             // 
             // ClearBtn
             // 
-            this.ClearBtn.BackColor = System.Drawing.Color.SandyBrown;
+            this.ClearBtn.BackColor = clearbtn_color;
             this.ClearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ClearBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ClearBtn.ForeColor = txtbox_color;
             this.ClearBtn.Location = new System.Drawing.Point(167, 617);
             this.ClearBtn.Name = "ClearBtn";
             this.ClearBtn.Size = new System.Drawing.Size(142, 29);
@@ -236,7 +259,7 @@
             // 
             // CreateBtn
             // 
-            this.CreateBtn.BackColor = System.Drawing.Color.SandyBrown;
+            this.CreateBtn.BackColor = createbtn_color;
             this.CreateBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CreateBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.CreateBtn.Location = new System.Drawing.Point(167, 572);
@@ -249,7 +272,7 @@
             // 
             // GoalTxtBox
             // 
-            this.GoalTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.GoalTxtBox.BackColor = txtbox_color;
             this.GoalTxtBox.Location = new System.Drawing.Point(188, 289);
             this.GoalTxtBox.Multiline = true;
             this.GoalTxtBox.Name = "GoalTxtBox";
@@ -258,7 +281,7 @@
             // 
             // PlanHouseTxtBox
             // 
-            this.PlanHouseTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.PlanHouseTxtBox.BackColor = txtbox_color;
             this.PlanHouseTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.PlanHouseTxtBox.Location = new System.Drawing.Point(188, 243);
             this.PlanHouseTxtBox.Name = "PlanHouseTxtBox";
@@ -268,7 +291,7 @@
             // 
             // PlanStreetTxtBox
             // 
-            this.PlanStreetTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.PlanStreetTxtBox.BackColor = txtbox_color;
             this.PlanStreetTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.PlanStreetTxtBox.Location = new System.Drawing.Point(188, 210);
             this.PlanStreetTxtBox.Name = "PlanStreetTxtBox";
@@ -278,7 +301,7 @@
             // 
             // PlanTownTxtBox
             // 
-            this.PlanTownTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.PlanTownTxtBox.BackColor = txtbox_color;
             this.PlanTownTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.PlanTownTxtBox.Location = new System.Drawing.Point(188, 177);
             this.PlanTownTxtBox.Name = "PlanTownTxtBox";
@@ -288,7 +311,7 @@
             // 
             // PhoneMskdTxtBox
             // 
-            this.PhoneMskdTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.PhoneMskdTxtBox.BackColor = txtbox_color;
             this.PhoneMskdTxtBox.Location = new System.Drawing.Point(188, 131);
             this.PhoneMskdTxtBox.Mask = "+7 (999) 000-0000";
             this.PhoneMskdTxtBox.Name = "PhoneMskdTxtBox";
@@ -297,7 +320,7 @@
             // 
             // PlanNameTxtBox
             // 
-            this.PlanNameTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.PlanNameTxtBox.BackColor = txtbox_color;
             this.PlanNameTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.PlanNameTxtBox.Location = new System.Drawing.Point(188, 87);
             this.PlanNameTxtBox.Name = "PlanNameTxtBox";
@@ -358,7 +381,7 @@
             // 
             this.MeetingLbl.AutoSize = true;
             this.MeetingLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.MeetingLbl.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.MeetingLbl.ForeColor = font_color;
             this.MeetingLbl.Location = new System.Drawing.Point(94, -1);
             this.MeetingLbl.Name = "MeetingLbl";
             this.MeetingLbl.Size = new System.Drawing.Size(270, 31);
@@ -367,7 +390,7 @@
             // 
             // DateMskdTxtBox
             // 
-            this.DateMskdTxtBox.BackColor = System.Drawing.Color.Linen;
+            this.DateMskdTxtBox.BackColor = txtbox_color;
             this.DateMskdTxtBox.Location = new System.Drawing.Point(188, 43);
             this.DateMskdTxtBox.Mask = "00/00/0000 90:00";
             this.DateMskdTxtBox.Name = "DateMskdTxtBox";
@@ -378,24 +401,25 @@
             // organizerPanel
             // 
             this.organizerPanel.AutoScroll = true;
-            this.organizerPanel.BackColor = System.Drawing.Color.OldLace;
+            this.organizerPanel.BackColor = background_color;
             this.organizerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.organizerPanel.Controls.Add(this.DateLbl);
             this.organizerPanel.Location = new System.Drawing.Point(287, 12);
             this.organizerPanel.Name = "organizerPanel";
             this.organizerPanel.Size = new System.Drawing.Size(786, 662);
             this.organizerPanel.TabIndex = 2;
-            this.organizerPanel.Controls.Add(this.DateLbl);
-            //
+            this.organizerPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
+            // 
             // DateLbl
-            //
+            // 
             this.DateLbl.AutoSize = true;
             this.DateLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.DateLbl.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.DateLbl.ForeColor = font_color;
             this.DateLbl.Location = new System.Drawing.Point(9, 9);
             this.DateLbl.Name = "DateLbl";
-            this.DateLbl.Size = new System.Drawing.Size(0, 31);
+            this.DateLbl.Size = new System.Drawing.Size(156, 31);
             this.DateLbl.TabIndex = 0;
-            this.DateLbl.Text = calendar.SelectionStart.ToString("d MMMM yyyy");
+            this.DateLbl.Text = "8 марта 2022";
             // 
             // Organizer
             // 
@@ -411,11 +435,15 @@
             this.Name = "Organizer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Органайзер";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Organizer_FormClosing);
+            this.Load += new System.EventHandler(this.Organizer_Load);
             this.calendarPanel.ResumeLayout(false);
             this.searchPanel.ResumeLayout(false);
             this.searchPanel.PerformLayout();
             this.PlanMeetingPanel.ResumeLayout(false);
             this.PlanMeetingPanel.PerformLayout();
+            this.organizerPanel.ResumeLayout(false);
+            this.organizerPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -453,5 +481,6 @@
         private Button ClearBtn;
         public Panel organizerPanel;
         private Label DateLbl;
+        private Button ClearSearchPanelBtn;
     }
 }
