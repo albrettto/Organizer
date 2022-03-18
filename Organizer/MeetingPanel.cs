@@ -20,7 +20,7 @@ namespace Organizer
             // 
             // panel
             // 
-            panel.BackColor = System.Drawing.Color.FloralWhite;
+            panel.BackColor = Color.White;
             panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panel.Controls.Add(delete_button);
             panel.Controls.Add(textBox);
@@ -48,16 +48,16 @@ namespace Organizer
             // 
             // textBox
             // 
-            textBox.BackColor = System.Drawing.Color.FloralWhite;
+            textBox.BackColor = System.Drawing.Color.White;
             textBox.Enabled = false;
             textBox.HideSelection = false;
             textBox.Location = new System.Drawing.Point(70, 4);
             textBox.Multiline = true;
             textBox.Name = "textBox";
-            textBox.PlaceholderText = "Имя: " + meet.getName() + "\n" 
-                + "Номер телефона: " +  meet.getPhoneNumber() + "\n" 
-                + "Адрес: " + meet.getTown() + " " + meet.getStreet() + " " + meet.getHouse() + "\n" 
-                + "Цель встречи: " + meet.getPurpose_of_meeting();
+            textBox.PlaceholderText = "Имя: " + meet.name + "\n" 
+                + "Номер телефона: " +  meet.phone_number + "\n" 
+                + "Адрес: " + meet.town + " " + meet.street + " " + meet.house + "\n" 
+                + "Цель встречи: " + meet.purpose_of_meeting;
             textBox.ReadOnly = true;
             textBox.Size = new System.Drawing.Size(643, 88);
             textBox.TabIndex = 4;
@@ -72,7 +72,7 @@ namespace Organizer
             label.Name = "label0";
             label.Size = new System.Drawing.Size(61, 28);
             label.TabIndex = 0;
-            label.Text = meet.getDate().ToString("HH:mm");
+            label.Text = meet.date.ToString("HH:mm");
             // 
             // label_d
             // 
@@ -82,7 +82,7 @@ namespace Organizer
             label_d.Name = "label0";
             label_d.Size = new System.Drawing.Size(61, 28);
             label_d.TabIndex = 0;
-            label_d.Text = meet.getDate().ToString("d");
+            label_d.Text = meet.date.ToString("d");
 
             delete_button.Click += new System.EventHandler(delete_button_Click);
 
@@ -94,7 +94,7 @@ namespace Organizer
             foreach (var day in Organizer.dates)
             {
                 for (int i = 0; i < day.Count; i++)
-                    if (day[i].getDate().ToString("d.MM.yyyy HH:mm:ss") == (label_d.Text + " " + label.Text + ":00"))
+                    if (day[i].date.ToString("d.MM.yyyy HH:mm:ss") == (label_d.Text + " " + label.Text + ":00"))
                     {
                         day.RemoveAt(i);
                         delete = true;
@@ -110,17 +110,6 @@ namespace Organizer
             textBox.Dispose();
             delete_button.Dispose();
             panel.Dispose();
-
-
-
-            //organizerPanel.Invoke .Controls.Clear();
-            //create_label(calendar.SelectionStart.ToString("d MMMM yyyy"));
-
-            //MeetingPanel meet_panel;
-            //foreach (var day in Organizer.dates)
-            //    if (day[0].getDate().ToString("d") == calendar.SelectionStart.ToString("d"))
-            //        for (int i = 0; i < day.Count(); ++i)
-            //            meet_panel = new MeetingPanel(organizerPanel, day[i], this.organizerPanel.Controls.Count - 1);
         }
 
     }

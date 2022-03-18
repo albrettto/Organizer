@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Organizer
 {
-    [Serializable]
+                                                                                          
     public class Meeting
     {
         public DateTime date;
@@ -35,62 +35,6 @@ namespace Organizer
             house = new_house;
             name = new_name;
             purpose_of_meeting = new_purpose_of_meeting;
-        }
-        public DateTime getDate()
-        {
-            return date;
-        }
-        public void setDate(DateTime new_date)
-        {
-            date = new_date;
-        }
-        public string getPhoneNumber()
-        {
-            return phone_number;
-        }
-        public void setPhoneNumber(string new_phone_number)
-        {
-            phone_number = new_phone_number;
-        }
-        public string getName()
-        {
-            return name;
-        }
-        public void setName(string new_name)
-        {
-            name = new_name;
-        }
-        public string getPurpose_of_meeting()
-        { 
-            return purpose_of_meeting;
-        }
-        public void setPurpose_of_meeting(string new_purpose_of_meeting)
-        {
-            purpose_of_meeting = new_purpose_of_meeting;
-        }
-        public string getTown()
-        {
-            return town;
-        }
-        public void setTown(string new_town)
-        {
-            town = new_town;
-        }
-        public string getStreet()
-        {
-            return street;
-        }
-        public void setStreet(string new_street)
-        {
-            street = new_street;
-        }
-        public string getHouse()
-        {
-            return house;
-        }
-        public void setHouse(string new_house)
-        {
-            house = new_house;
         }
     }    
 }

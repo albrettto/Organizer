@@ -1,10 +1,8 @@
 using System.Xml.Serialization;
-
-using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Organizer
 {
-    
     public partial class Organizer : Form
     {
         public Organizer()
@@ -18,23 +16,10 @@ namespace Organizer
         XmlSerializer ser = new XmlSerializer(typeof(List<List<Meeting>>));
         string path = "Storage.xml";
 
+        public static Colors color = new Colors("White", "Black", "DimGray", "WhiteSmoke", "White", "White");
 
-        // Цвета
-        //Color background_color = Color.OldLace;
-        //Color font_color = Color.SaddleBrown;
-        //Color clearbtn_color = Color.DimGray;
-        //Color planpanel_color = Color.NavajoWhite;
-        //Color txtbox_color = Color.Linen;
-        //Color deletebtn_color = Color.Salmon;
-        //Color createbtn_color = Color.SandyBrown;
-
-        Color background_color = System.Drawing.ColorTranslator.FromHtml("#AFAAC8");
-        Color font_color = System.Drawing.ColorTranslator.FromHtml("#27223D");
-        Color planpanel_color = System.Drawing.ColorTranslator.FromHtml("#7768BD");
-        Color txtbox_color = System.Drawing.ColorTranslator.FromHtml("#AFAAC8");
-        Color createbtn_color = System.Drawing.ColorTranslator.FromHtml("#574C8A");
-        Color deletebtn_color = System.Drawing.ColorTranslator.FromHtml("#27223D");
-        Color clearbtn_color = System.Drawing.ColorTranslator.FromHtml("#27223D");
+        XmlSerializer s = new XmlSerializer(typeof(Colors));
+        string p = "Colors.xml";
 
 
         private void CreateBtn_Click(object sender, EventArgs e)
@@ -63,11 +48,11 @@ namespace Organizer
                 bool flag = false;
                 // Добавление встречи в хранилище
                 foreach (var day in dates)
-                    if (day[0].getDate().ToString("d") == DateMskdTxtBox.Text.Substring(0, 10))
+                    if (day[0].date.ToString("d") == DateMskdTxtBox.Text.Substring(0, 10))
                     {
                         for (int i = 0; i < day.Count(); ++i)
                         {
-                            if (meet.getDate() < day[i].getDate())
+                            if (meet.date < day[i].date)
                             {
                                 Meeting temp = new Meeting();
                                 for (int j = i; j < day.Count() - 1; ++j)
@@ -93,6 +78,7 @@ namespace Organizer
                         }
                         if (!flag)
                         {
+
                             day.Add(meet);
                             flag = true;
                             break;
@@ -105,9 +91,9 @@ namespace Organizer
                     dates.Add(hours);
                 }
 
-                MeetingPanel meet_panel = new MeetingPanel(organizerPanel, meet, this.organizerPanel.Controls.Count - 1);
+                MeetingPanel meet_panel = new MeetingPanel(organizerPanel, meet, organizerPanel.Controls.Count - 1);
 
-                calendar.SetDate(meet.getDate());
+                calendar.SetDate(meet.date);
 
                 // Очистка формы
                 ClearBtn_Click(sender, e);
@@ -133,15 +119,13 @@ namespace Organizer
         public void Update_Panel()
         {
             organizerPanel.Controls.Clear();
-            create_label(calendar.SelectionStart.ToString("d MMMM yyyy"));
+            DateLbl.Text = calendar.SelectionStart.ToString("d MMMM yyyy");
 
             MeetingPanel meet_panel;
             foreach (var day in dates)
-                if (day[0].getDate().ToString("d") == calendar.SelectionStart.ToString("d"))
-                    //for (int i = 0; i < day.Count(); ++i)
-                    //    meet_panel = new MeetingPanel(organizerPanel, day[i], this.organizerPanel.Controls.Count - 1);
+                if (day[0].date.ToString("d") == calendar.SelectionStart.ToString("d"))
                     for (int i = day.Count()-1; i > -1; --i)
-                        meet_panel = new MeetingPanel(organizerPanel, day[i], this.organizerPanel.Controls.Count - 1);
+                        meet_panel = new MeetingPanel(organizerPanel, day[i], organizerPanel.Controls.Count - 1);
         }
 
         private void SearchBtn_Click(object sender, EventArgs e)
@@ -151,7 +135,7 @@ namespace Organizer
             else 
             {
                 organizerPanel.Controls.Clear();
-                create_label("Результаты поиска:");
+                DateLbl.Text = "Результаты поиска:";
 
                 MeetingPanel meet_panel;
                 foreach (var day in dates)
@@ -167,31 +151,31 @@ namespace Organizer
                         if (PhoneNumberMskdTxtBox.Text != "+7 (   )    -")
                         {
                             check_for_search[0] = 1;
-                            if (day[i].getPhoneNumber() == PhoneNumberMskdTxtBox.Text)
+                            if (day[i].phone_number == PhoneNumberMskdTxtBox.Text)
                                 check_for_search[0] = 2;
                         }
                         if (TownTxtBox.Text != "")
                         {
                             check_for_search[1] = 1;
-                            if (day[i].getTown() == TownTxtBox.Text)
+                            if (day[i].town == TownTxtBox.Text)
                                 check_for_search[1] = 2;
                         }
                         if (StreetTxtBox.Text != "")
                         {
                             check_for_search[2] = 1;
-                            if (day[i].getStreet() == StreetTxtBox.Text)
+                            if (day[i].street == StreetTxtBox.Text)
                                 check_for_search[2] = 2;
                         }
                         if (HouseTxtBox.Text != "")
                         {
                             check_for_search[3] = 1;
-                            if (day[i].getHouse().ToString() == HouseTxtBox.Text)
+                            if (day[i].house.ToString() == HouseTxtBox.Text)
                                 check_for_search[3] = 2;
                         }
                         if (NameTxtBox.Text != "")
                         {
                             check_for_search[4] = 1;
-                            if (day[i].getName() == NameTxtBox.Text)
+                            if (day[i].name == NameTxtBox.Text)
                                 check_for_search[4] = 2;
                         }
                         int flag = 0;
@@ -206,7 +190,7 @@ namespace Organizer
                                 flag = 2;
                         }
                         if (flag == 2)
-                            meet_panel = new MeetingPanel(organizerPanel, day[i], this.organizerPanel.Controls.Count - 1);
+                            meet_panel = new MeetingPanel(organizerPanel, day[i], organizerPanel.Controls.Count - 1);
                     }
             }
         }
@@ -220,20 +204,6 @@ namespace Organizer
             NameTxtBox.Text = "";
         }
 
-        private void create_label(string text)
-        {
-            Label DateLbl = new Label();
-            DateLbl.AutoSize = true;
-            DateLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            DateLbl.ForeColor = font_color;
-            DateLbl.Location = new System.Drawing.Point(9, 9);
-            DateLbl.Name = "DateLbl";
-            DateLbl.Size = new System.Drawing.Size(0, 31);
-            DateLbl.TabIndex = 0;
-            DateLbl.Text = text;
-            organizerPanel.Controls.Add(DateLbl);
-        }
-
         private void Organizer_Load(object sender, EventArgs e)
         {
             FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
@@ -243,6 +213,19 @@ namespace Organizer
                 Update_Panel();
             }
             file.Close();
+
+            FileStream f = new FileStream(p, FileMode.Open, FileAccess.Read, FileShare.None);
+            if (f.Length > 0)
+            {
+                color = (Colors)s.Deserialize(f);
+                Update_Colors(color);
+            }
+            else
+            {
+                WhiteTheme_Click(sender, e);
+                Update_Colors(color);
+            }
+            f.Close();
         }
 
         private void Organizer_FormClosing(object sender, FormClosingEventArgs e)
@@ -252,6 +235,113 @@ namespace Organizer
             FileStream files = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
             ser.Serialize(files, dates);
             files.Close();
+
+            XmlSerializer s = new XmlSerializer(typeof(Colors));
+            string p = "Colors.xml";
+            FileStream f = new FileStream(p, FileMode.Create, FileAccess.Write, FileShare.None);
+            s.Serialize(f, color);
+            f.Close();
+        }
+
+        void Update_Colors(Colors color)
+        {
+            calendarPanel.BackColor = ColorTranslator.FromHtml(color.background_color);
+            calendar.ForeColor = ColorTranslator.FromHtml(color.font_color);
+            searchPanel.BackColor = ColorTranslator.FromHtml(color.background_color);
+
+            ClearSearchPanelBtn.BackColor = ColorTranslator.FromHtml(color.clearbtn_color);
+            ClearSearchPanelBtn.ForeColor = ColorTranslator.FromHtml(color.txtbox_color);
+
+            SearchBtn.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            SearchLbl.ForeColor = ColorTranslator.FromHtml(color.font_color);
+            PlanMeetingPanel.BackColor = ColorTranslator.FromHtml(color.planpanel_color);
+
+            ClearBtn.BackColor = ColorTranslator.FromHtml(color.clearbtn_color);
+            ClearBtn.ForeColor = ColorTranslator.FromHtml(color.txtbox_color);
+
+            CreateBtn.BackColor = ColorTranslator.FromHtml(color.createbtn_color);
+            GoalTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            PlanHouseTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            PlanStreetTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            PlanTownTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            PhoneMskdTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            PlanNameTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            MeetingLbl.ForeColor = ColorTranslator.FromHtml(color.font_color);
+            DateMskdTxtBox.BackColor = ColorTranslator.FromHtml(color.txtbox_color);
+            organizerPanel.BackColor = ColorTranslator.FromHtml(color.background_color);
+            DateLbl.ForeColor = ColorTranslator.FromHtml(color.font_color);
+            topPanel.BackColor = ColorTranslator.FromHtml(color.background_color);
+        }
+
+        private void WhiteTheme_Click(object sender, EventArgs e)
+        {
+            color.background_color = ("White");
+            color.font_color = ("Black");
+            color.clearbtn_color = ("DimGray");
+            color.planpanel_color = ("WhiteSmoke");
+            color.txtbox_color = ("White");
+            color.createbtn_color = ("White");
+            Update_Colors(color);
+        }
+
+        private void StandartTheme_Click(object sender, EventArgs e)
+        {
+            color.background_color = ("OldLace");
+            color.font_color = ("SaddleBrown");
+            color.clearbtn_color = ("DimGray");
+            color.planpanel_color = ("NavajoWhite");
+            color.txtbox_color = ("Linen");
+            color.createbtn_color = ("SandyBrown");
+            Update_Colors(color);
+        }
+
+        private void MonochromeTheme_Click(object sender, EventArgs e)
+        {
+            color.background_color = ("#F4F6F4");
+            color.font_color = ("#342E36");
+            color.clearbtn_color = ("#817581");
+            color.planpanel_color = ("#8D7F87");
+            color.txtbox_color = ("#F4F6F4");
+            color.createbtn_color = ("#918590");
+            Update_Colors(color);
+        }
+
+        private void EcologicalTheme_Click(object sender, EventArgs e)
+        {
+            color.background_color = ("#F4ECD1");
+            color.font_color = ("#0B1B29");
+            color.clearbtn_color = ("#1C4751");
+            color.planpanel_color = ("#CAD0B1");
+            color.txtbox_color = color.background_color;
+            color.createbtn_color = ("#6B9076");
+            Update_Colors(color);
+        }
+
+        private void Check_Is_Digit(object sender, KeyPressEventArgs e)
+        {
+            if (!Regex.Match(e.KeyChar.ToString(), @"[а-яА-Я]|[a-zA-Z]").Success && e.KeyChar != 8 && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Check_House(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != 8 && e.KeyChar != 47)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void ShowAllMeetings_Click(object sender, EventArgs e)
+        {
+            organizerPanel.Controls.Clear();
+            DateLbl.Text = "Все встречи";
+
+            MeetingPanel meet_panel;
+            foreach (var day in dates)
+                    for (int i = day.Count() - 1; i > -1; --i)
+                        meet_panel = new MeetingPanel(organizerPanel, day[i], organizerPanel.Controls.Count - 1);
         }
     }
 }
